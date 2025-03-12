@@ -26,7 +26,7 @@ class UserController extends Controller
         // ];
         // UserModel::create($data); //tambahkan data ke tabel m_user
 
-        $user = UserModel::all(); //ambil semua data dari tabel m_user
+        // $user = UserModel::all(); //ambil semua data dari tabel m_user
 
         // $user = UserModel::find(1);
 
@@ -128,6 +128,9 @@ class UserController extends Controller
         // $user->wasChanged(['username', 'level_id']); //true
         // $user->wasChanged('nama'); //false
         // dd($user->wasChanged(['nama', 'username'])); //true
+
+        $user = UserModel::with('level')->get();
+        // dd($user);
 
         return view('user', ['data' => $user]);
     }
