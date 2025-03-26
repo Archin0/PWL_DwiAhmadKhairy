@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('stok_id'); // Primary key
             $table->unsignedBigInteger('barang_id')->index(); // Foreign key ke tabel m_barang
             $table->unsignedBigInteger('user_id')->index(); // Foreign key ke tabel m_user
+            $table->unsignedBigInteger('supplier_id')->index(); //Foreign key ke tabel m_supplier
             $table->dateTime('stok_tanggal');
             $table->integer('stok_jumlah');
             $table->timestamps();
@@ -22,6 +23,7 @@ return new class extends Migration
             // Definisi foreign key
             $table->foreign('barang_id')->references('barang_id')->on('m_barang');
             $table->foreign('user_id')->references('user_id')->on('m_user');
+            $table->foreign('supplier_id')->references('supplier_id')->on('m_supplier');
         });
     }
 

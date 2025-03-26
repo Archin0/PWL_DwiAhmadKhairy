@@ -18,6 +18,7 @@ class StokSeeder extends Seeder
                 'stok_id' => $i,
                 'barang_id' => $i, // Menghubungkan dengan barang_id yang ada
                 'user_id' => 1, // Asumsikan admin yang menginput stok
+                'supplier_id' => rand(1, 3),
                 'stok_tanggal' => now(),
                 'stok_jumlah' => rand(10, 100), // Stok acak antara 10 hingga 100
                 'created_at' => now(),

@@ -1,13 +1,16 @@
 <?php
 
+// use App\Http\Controllers\HomeController;
+// use App\Http\Controllers\ProductController;
+// use App\Http\Controllers\SalesController;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SalesController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,4 +84,26 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::get('/{id}/edit', [KategoriController::class, 'edit']);  // menampilkan halaman form edit kategori
     Route::put("/{id}", [KategoriController::class, 'update']);     // menyimpan perubahan data kategori
     Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data kategori
+});
+
+Route::group(['prefix' => 'supplier'], function () {
+    Route::get('/', [SupplierController::class, 'index']);
+    Route::post('/list', [SupplierController::class, 'list']);
+    Route::get('/create', [SupplierController::class, 'create']);
+    Route::post('/', [SupplierController::class, 'store']);
+    Route::get('/{id}', [SupplierController::class, 'show']);
+    Route::get('/{id}/edit', [SupplierController::class, 'edit']);
+    Route::put("/{id}", [SupplierController::class, 'update']);
+    Route::delete('/{id}', [SupplierController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'barang'], function () {
+    Route::get('/', [BarangController::class, 'index']);
+    Route::post('/list', [BarangController::class, 'list']);
+    Route::get('/create', [BarangController::class, 'create']);
+    Route::post('/', [BarangController::class, 'store']);
+    Route::get('/{id}', [BarangController::class, 'show']);
+    Route::get('/{id}/edit', [BarangController::class, 'edit']);
+    Route::put("/{id}", [BarangController::class, 'update']);
+    Route::delete('/{id}', [BarangController::class, 'destroy']);
 });
