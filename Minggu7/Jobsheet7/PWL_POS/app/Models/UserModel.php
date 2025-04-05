@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     use HasFactory;
 
@@ -14,8 +15,11 @@ class UserModel extends Model
     protected $primaryKey = 'user_id'; //mendefinisikan primary key tabel yang digunakan model
 
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password']; //Berhasil
+    protected $fillable = ['level_id', 'username', 'nama', 'password', 'created_at', 'updated_at']; //Berhasil
     // protected $fillable = ['level_id', 'username', 'nama']; //terjadi error
+
+    protected $hidden = ['password']; //menghilangkan kolom password ketika melakukan insert atau update 
+    protected $casts = ['password' => 'hashed']; //casting pw agar otomatis dihash
 
     public function level(): BelongsTo
     {
