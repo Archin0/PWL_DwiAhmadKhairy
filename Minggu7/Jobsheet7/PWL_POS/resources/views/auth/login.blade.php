@@ -56,6 +56,7 @@
           <!-- /.col --> 
         </div> 
       </form> 
+      <p class="mt-3 mb-auto">Belum punya akun? <a href="{{ route('register') }}" class="text-center">Daftar</a></p>
     </div> 
     <!-- /.card-body --> 
   </div> 
