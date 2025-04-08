@@ -146,7 +146,8 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']);
             Route::get('/import', [BarangController::class, 'import']); // untuk import data barang
             Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // untuk import data barang ajax
-            Route::get('/export_excel', [BarangController::class, 'export_excel']); // untuk import data barang ajax
+            Route::get('/export_excel', [BarangController::class, 'export_excel']); // untuk export data barang xlsx
+            Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // untuk export data barang pdf
         });
     });
 
