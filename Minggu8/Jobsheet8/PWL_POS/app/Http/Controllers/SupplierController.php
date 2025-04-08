@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SupplierModel;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class SupplierController extends Controller
 {
@@ -37,27 +38,27 @@ class SupplierController extends Controller
         return DataTables::of($suppliers)
             ->addIndexColumn()
             ->addColumn('aksi', function ($supplier) {
-            // Tampilkan tombol Detail, Edit, Hapus
-            // $btn = '<a href="' . url('/supplier/' . $suppliers->supplier_id) . '"
-            //              class="btn btn-info btn-sm">Detail</a> ';
+                // Tampilkan tombol Detail, Edit, Hapus
+                // $btn = '<a href="' . url('/supplier/' . $suppliers->supplier_id) . '"
+                //              class="btn btn-info btn-sm">Detail</a> ';
 
-            // $btn .= '<a href="' . url('/supplier/' . $suppliers->supplier_id . '/edit') . '"
-            //              class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<a href="' . url('/supplier/' . $suppliers->supplier_id . '/edit') . '"
+                //              class="btn btn-warning btn-sm">Edit</a> ';
 
-            // $btn .= '<form class="d-inline-block" method="POST"
-            //              action="' . url('/supplier/' . $suppliers->supplier_id) . '">'
-            //     . csrf_field()
-            //     . method_field('DELETE')
-            //     . '<button type="submit" class="btn btn-danger btn-sm"
-            //              onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
-            //              Hapus
-            //            </button></form>';
-            $btn = '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
-                '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-            $btn .= '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
-                '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-            $btn .= '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
-                '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                // $btn .= '<form class="d-inline-block" method="POST"
+                //              action="' . url('/supplier/' . $suppliers->supplier_id) . '">'
+                //     . csrf_field()
+                //     . method_field('DELETE')
+                //     . '<button type="submit" class="btn btn-danger btn-sm"
+                //              onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
+                //              Hapus
+                //            </button></form>';
+                $btn = '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
+                    '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
+                    '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/supplier/' . $supplier->supplier_id .
+                    '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
 
                 return $btn;
             })
@@ -294,6 +295,78 @@ class SupplierController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Data gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini'
+                ]);
+            }
+        }
+
+        return redirect('/');
+    }
+
+    public function import()
+    {
+        return view('supplier.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+
+            $rules = [
+                // Validasi file harus xlsx, maksimal 1MB
+                'file_supplier' => ['required', 'mimes:xlsx', 'max:1024']
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'   => false,
+                    'message'  => 'Validasi Gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+
+            // Ambil file dari request
+            $file = $request->file('file_supplier');
+
+            // Membuat reader untuk file excel dengan format Xlsx
+            $reader = IOFactory::createReader('Xlsx');
+            $reader->setReadDataOnly(true); // Hanya membaca data saja
+
+            // Load file excel
+            $spreadsheet = $reader->load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet(); // Ambil sheet yang aktif
+
+            // Ambil data excel sebagai array
+            $data = $sheet->toArray(null, false, true, true);
+            $insert = [];
+
+            // Pastikan data memiliki lebih dari 1 baris (header + data)
+            if (count($data) > 1) {
+                foreach ($data as $baris => $value) {
+                    if ($baris > 1) { // Baris pertama adalah header, jadi lewati
+                        $insert[] = [
+                            'supplier_kode' => $value['A'],
+                            'supplier_nama' => $value['B'],
+                            'supplier_alamat' => $value['C'],
+                            'created_at'  => now(),
+                        ];
+                    }
+                }
+
+                if (count($insert) > 0) {
+                    // Insert data ke database, jika data sudah ada, maka diabaikan
+                    SupplierModel::insertOrIgnore($insert);
+                }
+
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Data berhasil diimport'
+                ]);
+            } else {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Tidak ada data yang diimport'
                 ]);
             }
         }

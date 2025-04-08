@@ -214,10 +214,31 @@ class BarangController extends Controller
 
             $data = $sheet->toArray(null, false, true, true);   // ambil data excel 
 
+            $errors = [];
             $insert = [];
             if (count($data) > 1) { // jika data lebih dari 1 baris 
                 foreach ($data as $baris => $value) {
                     if ($baris > 1) { // baris ke 1 adalah header, maka lewati 
+                        $kategoriId = $value['A'];
+                        // Cek apakah kategori_id ada di tabel m_kategori
+                        if (!KategoriModel::where('kategori_id', $kategoriId)->exists()) {
+                            $errors["baris_$baris"] = "Kategori dengan ID {$kategoriId} tidak terdaftar.";
+                        }
+                    }
+                }
+
+                // Jika ada error validasi kategori, kembalikan response error
+                if (count($errors) > 0) {
+                    return response()->json([
+                        'status'   => false,
+                        'message'  => 'Validasi kategori gagal',
+                        'msgField' => $errors
+                    ]);
+                }
+
+                // Jika semua kategori valid, buat array data untuk di-insert
+                foreach ($data as $baris => $value) {
+                    if ($baris > 1) { // Lewati header
                         $insert[] = [
                             'kategori_id' => $value['A'],
                             'barang_kode' => $value['B'],

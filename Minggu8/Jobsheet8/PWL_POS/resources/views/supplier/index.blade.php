@@ -5,7 +5,8 @@
      <div class="card-header">
          <h3 class="card-title">{{ $page->title }}</h3>
          <div class="card-tools">
-             <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
+            <button onclick="modalAction('{{ url('/supplier/import') }}')" class="btn btn-sm btn-info mt-1">Import Supplier</button> 
+            <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
              <button onclick="modalAction('{{ url('/supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
          </div>
      </div>
@@ -80,6 +81,12 @@
                  searchable: false
              }
          ]
+     });
+
+     $('#table_supplier_filter input').unbind().bind().on('keyup', function(e){
+         if(e.keyCode == 13){ // enter key
+             dataSupplier.search(this.value).draw();
+         }
      });
  });
  </script>
