@@ -15,7 +15,9 @@ class UserModel extends Authenticatable
     protected $primaryKey = 'user_id'; //mendefinisikan primary key tabel yang digunakan model
 
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password', 'created_at', 'updated_at']; //Berhasil
+    protected $fillable = ['level_id', 'username', 'nama', 'password', 
+                            'profile_photo', 'created_at', 'updated_at']; 
+
     // protected $fillable = ['level_id', 'username', 'nama']; //terjadi error
 
     protected $hidden = ['password']; //menghilangkan kolom password ketika melakukan insert atau update 
