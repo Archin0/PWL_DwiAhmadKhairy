@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('akses', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_akses');
+            $table->unsignedBigInteger('id_user');
+            $table->boolean('kelola_akun')->default(false);
+            $table->boolean('kelola_barang')->default(false);
+            $table->boolean('transaksi')->default(true);
+            $table->boolean('laporan')->default(false);
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
         });
     }
 

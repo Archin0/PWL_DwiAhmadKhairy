@@ -12,8 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_transaksi');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_barang');
+            $table->string('kode_transaksi');
+            $table->integer('jumlah');
+            $table->integer('total_barang');
+            $table->bigInteger('subtotal');
+            $table->integer('diskon')->default(0);
+            $table->bigInteger('total_harga');
+            $table->bigInteger('bayar');
+            $table->bigInteger('kembali');
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_barang')->references('id_barang')->on('barang');
         });
     }
 
