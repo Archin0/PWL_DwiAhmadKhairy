@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('akses', function (Blueprint $table) {
             $table->id('id_akses');
-            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_user')->index();
             $table->boolean('kelola_akun')->default(false);
             $table->boolean('kelola_barang')->default(false);
             $table->boolean('transaksi')->default(true);

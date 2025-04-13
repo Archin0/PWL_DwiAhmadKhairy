@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('id_transaksi');
-            $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_barang');
-            $table->string('kode_transaksi');
+            $table->unsignedBigInteger('id_user')->index();
+            $table->unsignedBigInteger('id_barang')->index();
+            $table->string('kode_transaksi')->unique();
             $table->integer('jumlah');
             $table->integer('total_barang');
             $table->bigInteger('subtotal');
