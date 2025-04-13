@@ -14,8 +14,15 @@ class Barang extends Model
     protected $table = 'barang';
     protected $primaryKey = 'id_barang';
 
-    protected $fillable = ['id_kategori', 'kode_barang', 'nama_barang', 'stok', 'harga', 'foto_barang'];
-    public $timestamps = false;
+    protected $fillable = [
+        'id_kategori', 
+        'kode_barang', 
+        'nama_barang', 
+        'stok', 
+        'harga', 
+        'foto_barang',
+        'created_at',
+        'updated_at',];
 
     public function kategori(): BelongsTo
     {

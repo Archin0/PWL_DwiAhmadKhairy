@@ -12,7 +12,19 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $primaryKey = 'id_transaksi';
-    protected $fillable = ['id_user', 'kode_transaksi', 'jumlah', 'total_barang', 'subtotal', 'diskon', 'total_harga', 'bayar', 'kembali'];
+    protected $fillable = [
+        'id_user', 
+        'kode_transaksi', 
+        'jumlah', 
+        'total_barang', 
+        'subtotal', 
+        'diskon', 
+        'total_harga', 
+        'bayar', 
+        'kembali',
+        'created_at',
+        'updated_at',
+    ];
     public $timestamps = false;
 
     public function barang(): BelongsTo

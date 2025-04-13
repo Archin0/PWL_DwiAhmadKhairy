@@ -13,7 +13,15 @@ class Supply extends Model
 
     protected $table = 'supply';
     protected $primaryKey = 'id_supply';    
-    protected $fillable = ['id_supplier', 'id_barang', 'id_user', 'jumlah', 'harga_beli'];
+    protected $fillable = [
+        'id_supplier', 
+        'id_barang', 
+        'id_user', 
+        'jumlah', 
+        'harga_beli',
+        'created_at',
+        'updated_at',
+    ];
     public $timestamps = false;
 
     public function supplier(): BelongsTo

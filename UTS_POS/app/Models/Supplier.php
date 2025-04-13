@@ -12,8 +12,13 @@ class Supplier extends Model
 
     protected $table = 'supplier';
     protected $primaryKey = 'id_supplier';
-    protected $fillable = ['nama_supplier', 'no_telp', 'alamat'];
-    public $timestamps = false;
+    protected $fillable = [
+        'nama_supplier', 
+        'no_telp', 
+        'alamat',
+        'created_at',
+        'updated_at',
+    ];
 
     public function supplies(): HasMany
     {

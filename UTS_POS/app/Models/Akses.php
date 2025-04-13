@@ -19,8 +19,9 @@ class Akses extends Model
         'kelola_barang',
         'transaksi',
         'laporan',
+        'created_at',
+        'updated_at',
     ];
-    public $timestamps = false;
 
     public function user(): BelongsTo
     {
