@@ -14,7 +14,7 @@ class SupplySeeder extends Seeder
     public function run(): void
     {
         DB::table('supply')->insert([
-            ['id_supplier' => 1, 'id_barang' => 1, 'id_user' => 1, 'jumlah' => 2, 'harga_beli' => 1800000000],
+            ['id_barang' => 1, 'id_user' => 1, 'jumlah' => 2, 'harga_beli' => 1800000000],
         ]);
     }
 }

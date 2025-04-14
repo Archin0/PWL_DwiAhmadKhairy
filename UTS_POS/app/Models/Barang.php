@@ -15,7 +15,8 @@ class Barang extends Model
     protected $primaryKey = 'id_barang';
 
     protected $fillable = [
-        'id_kategori', 
+        'id_kategori',
+        'id_supplier',
         'kode_barang', 
         'nama_barang', 
         'stok', 
@@ -27,6 +28,11 @@ class Barang extends Model
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'id_supplier');
     }
 
     public function supplies() : HasMany

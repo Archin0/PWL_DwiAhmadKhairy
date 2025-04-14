@@ -14,7 +14,6 @@ class Supply extends Model
     protected $table = 'supply';
     protected $primaryKey = 'id_supply';    
     protected $fillable = [
-        'id_supplier', 
         'id_barang', 
         'id_user', 
         'jumlah', 
@@ -23,11 +22,6 @@ class Supply extends Model
         'updated_at',
     ];
     public $timestamps = false;
-
-    public function supplier(): BelongsTo
-    {
-        return $this->belongsTo(Supplier::class, 'id_supplier');
-    }
 
     public function barang(): BelongsTo
     {

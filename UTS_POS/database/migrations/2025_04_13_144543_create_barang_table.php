@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->id('id_barang');
             $table->unsignedBigInteger('id_kategori')->index();
+            $table->unsignedBigInteger('id_supplier')->index();
             $table->string('kode_barang')->unique();
             $table->string('nama_barang');
             $table->integer('stok');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori');
+            $table->foreign('id_supplier')->references('id_supplier')->on('supplier');
         });
     }
 

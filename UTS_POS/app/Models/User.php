@@ -26,10 +26,10 @@ class User extends Authenticatable
         'nama',
         'username',
         'password',
-        'role'
+        'role',
+        'created_at',
+        'updated_at'
     ];
-
-    public $timestamps = false; //untuk menghindari issue atau error ketika menyimpan data dengan eloquent
 
     /**
      * The attributes that should be hidden for serialization.
