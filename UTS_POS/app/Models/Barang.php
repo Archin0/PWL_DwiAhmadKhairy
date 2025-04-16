@@ -37,11 +37,11 @@ class Barang extends Model
 
     public function supplies() : HasMany
     {
-        return $this->hasMany(Supply::class, 'id_barang');
+        return $this->hasMany(Supply::class, 'id_barang', 'id_barang');
     }
 
     public function transaksi(): HasMany
     {
-        return $this->hasMany(Transaksi::class, 'id_barang');
+        return $this->hasMany(Transaksi::class, 'id_barang', 'id_barang');
     }
 }

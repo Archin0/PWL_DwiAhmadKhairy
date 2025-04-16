@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -23,10 +24,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_level',
         'nama',
         'username',
         'password',
-        'role',
+        'foto_profil',
         'created_at',
         'updated_at'
     ];
@@ -53,7 +55,7 @@ class User extends Authenticatable
 
     public function supplies(): HasMany
     {
-        return $this->hasMany(Supply::class, 'id_user');
+        return $this->hasMany(Supply::class, 'id_user', 'id_user');
     }
 
     public function transaksi(): HasMany
@@ -64,5 +66,28 @@ class User extends Authenticatable
     public function akses(): HasOne
     {
         return $this->hasOne(Akses::class, 'id_user, id_user');
+    }
+
+    public function level(): BelongsTo
+    {
+        return $this->belongsTo(Level::class, 'id_level', 'id_level');
+    }
+
+    //Mendapatkan nama role
+    public function getNamaRole(): string
+    {
+        return $this->level->nama_level;
+    }
+
+    //Cek apakah user memiliki role tertentu
+    public function hasRole($role): bool
+    {
+        return $this->level->kode_level == $role;
+    }
+
+    //Mendapatkan kode role
+    public function getRole()
+    {
+        return $this->level->kode_level;
     }
 }

@@ -18,10 +18,12 @@ class AuthorizeUser
         Closure $next,
         ...$roles
     ): Response {
-        if (in_array($request->user()->role, $roles)) {
-            return $next($request);
+        $user_role = $request->user()->getRole(); //ambil data level_kode dari user yang login
+        if (in_array($user_role, $roles)) { //cek apakah level_kode user yang login ada di array $roles
+            return $next($request); //lanjutkan request
         }
 
-        return back();
+        //jika tidak punya role, maka tampilkan pesan error
+        abort(403, 'Forbidden. Anda tidak memiliki akses untuk melakukan aksi ini');
     }
 }

@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
+            $table->unsignedBigInteger('id_level')->index();
             $table->string('nama');
-            $table->string('role');
             $table->string('foto_profil')->nullable();
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_level')->references('id_level')->on('level');
         });
     }
 
