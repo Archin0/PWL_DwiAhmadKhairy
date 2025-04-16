@@ -3,7 +3,8 @@
 <head> 
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <title>Login Pengguna</title>
+  <title>Login | autoMobilPOS</title>
+  <link rel="icon" href="{{ asset('autologo-circle.jpg') }}" type="image/x-icon">
 
   <!-- Google Font: Source Sans Pro --> 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> 
@@ -19,8 +20,11 @@
 <body class="hold-transition login-page"> 
 <div class="login-box"> 
   <!-- /.login-logo --> 
+  <div class="login-logo">
+    <a href="{{ url('/') }}"><b>autoMobil</b>POS</a>
+  </div>
   <div class="card card-outline card-primary"> 
-    <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>autoMobil</b>POS</a></div> 
+    {{-- <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>autoMobil</b>POS</a></div>  --}}
     <div class="card-body"> 
       <p class="login-box-msg">Sign in to start your session</p> 
       <form action="{{ route('login') }}" method="POST" id="form-login"> 
@@ -44,14 +48,9 @@
           <small id="error-password" class="error-text text-danger"></small> 
         </div> 
         <div class="row"> 
-          {{-- <div class="col-8"> 
-            <div class="icheck-primary"> 
-              <input type="checkbox" id="remember"><label for="remember">Remember Me</label> 
-            </div> 
-          </div>  --}}
           <!-- /.col --> 
           <div class="col-4"> 
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button> 
+            <button type="submit" class="btn btn-primary btn-block">Sign in</button> 
           </div> 
           <!-- /.col --> 
         </div> 
