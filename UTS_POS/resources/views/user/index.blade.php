@@ -3,7 +3,6 @@
 @section('content')
   <div class="card card-outline card-primary">
       <div class="card-header">
-        {{-- <h3 class="card-title">{{ $page->title }}</h3>  --}}
         <div class="card-tools">
           <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-md btn-info mt-1">Import User (.xlsx)</button>
           {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/export_excel') }}"><i class="fa fa-file-excel"></i>Export User</a>
@@ -37,7 +36,7 @@
         </div>
         <table class="table table-striped table-row-bordered" id="table_user">
             <thead>
-                <tr><th>Foto Profil</th><th>Username</th><th>Nama</th><th>Level Pengguna</th><th>Aksi</th></tr>
+                <tr><th>Foto Profil</th><th>Username</th><th>Nama</th><th>Level User</th><th>Aksi</th></tr>
             </thead>
         </table>
     </div>
@@ -105,11 +104,21 @@
       $('#id_level').on('change', function() {
             dataUser.ajax.reload();
         });
+      
+      //tidak reload otomatis
+      // $('#table_user_filter input').unbind().bind().on('keyup', function(e){
+      //    if(e.keyCode == 13){ // enter key
+      //        dataUser.search(this.value).draw();
+      //    }
+      // });
 
-      $('#table_user_filter input').unbind().bind().on('keyup', function(e){
-         if(e.keyCode == 13){ // enter key
-             dataUser.search(this.value).draw();
-         }
+      //reload otomatis dengan delay 300ms
+      var searchTimer;
+      $('#table_user_filter input').off('keyup').on('keyup', function() {
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(function() {
+              dataUser.search($('#table_user_filter input').val()).draw();
+          }, 300); // Delay 300ms setelah pengetikan berhenti
       });
     });
   </script>

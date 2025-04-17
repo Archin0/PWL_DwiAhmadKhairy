@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AksesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
@@ -28,7 +29,7 @@ Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () { // middleware auth, artinya hanya bisa diakses oleh user yang sudah login
-    Route::get('/', [WelcomeController::class, 'index']);
+    Route::get('/dashboard', [WelcomeController::class, 'index']);
 
     Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
         Route::group(['prefix' => 'user'], function () {
@@ -42,6 +43,14 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
             Route::get('/import', [UserController::class, 'import']);
             Route::post('/import_ajax', [UserController::class, 'import_ajax']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+        Route::group(['prefix' => 'akses'], function () {
+            Route::get('/', [AksesController::class, 'index']);      // menampilkan halaman awal user
+            Route::post('/list', [AksesController::class, 'list']);        // menampilkan data user dalam bentuk json untuk datatables
+            Route::post('/update_akses', [AksesController::class, 'update_akses']);        // menampilkan data user dalam bentuk json untuk datatables
         });
     });
 });
