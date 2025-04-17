@@ -48,12 +48,6 @@
 
 @push('js')
 <script>
-    function modalAction(url = '') {
-        $('#myModal').load(url, function () {
-            $('#myModal').modal('show');
-        });
-    }
-    
     var dataAkses;
     $(document).ready(function() {
         dataAkses = $('#table_akses').DataTable({
@@ -118,36 +112,95 @@
             const field = $(this).data('field');
             const value = $(this).is(':checked') ? 1 : 0;
             
-            $.ajax({
-                url: "{{ url('akses/update_akses') }}",
-                type: "POST",
-                data: {
-                    id: id,
-                    field: field,
-                    value: value,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                    if(response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Terjadi Kesalahan',
-                            text: response.message
-                        });
-                    }
-                },
-                error: function() {
-                    toastr.error('Terjadi kesalahan');
-                    // Revert checkbox on error
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: 'Apakah anda yakin ingin mengubah hak akses?',
+                showCancelButton: true,
+                confirmButtonText: 'Lanjutkan',
+                cancelButtonText: 'Batalkan',
+                reverseButtons: true,
+                focusCancel: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // User clicked "Lanjutkan" - proceed with the change
+                    $.ajax({
+                        url: "{{ url('akses/update_akses') }}",
+                        type: "POST",
+                        data: {
+                            id: id,
+                            field: field,
+                            value: value,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if(response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                            // Revert checkbox on error
+                            $(this).prop('checked', !value);
+                        }
+                    });
+                    // Revert the checkbox
+                    $(this).prop('checked', !value);
+                    // Refresh the page to ensure consistency
+                    location.reload();
+                } else {
+                    // User clicked "Batalkan" or closed the dialog - revert the checkbox
                     $(this).prop('checked', !value);
                 }
             });
+            // $.ajax({
+            //     url: "{{ url('akses/update_akses') }}",
+            //     type: "POST",
+            //     data: {
+            //         id: id,
+            //         field: field,
+            //         value: value,
+            //         _token: "{{ csrf_token() }}"
+            //     },
+            //     success: function(response) {
+            //         if(response.success) {
+            //             Swal.fire({
+            //                 icon: 'success',
+            //                 title: 'Berhasil',
+            //                 text: response.message
+            //             });
+            //         } else {
+            //             Swal.fire({
+            //                 icon: 'error',
+            //                 title: 'Terjadi Kesalahan',
+            //                 text: response.message
+            //             });
+            //         }
+            //     },
+            //     error: function() {
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Terjadi Kesalahan',
+            //             text: response.message
+            //         });
+            //         // Revert checkbox on error
+            //         $(this).prop('checked', !value);
+            //     }
+            // });
         });
 
         //reload otomatis dengan delay 300ms
