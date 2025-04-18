@@ -29,6 +29,7 @@ Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () { // middleware auth, artinya hanya bisa diakses oleh user yang sudah login
+    Route::get('/', [WelcomeController::class, 'index']);
     Route::get('/dashboard', [WelcomeController::class, 'index']);
 
     Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
@@ -66,10 +67,27 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
         });
     });
 
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau MNG atau STF
+        Route::group(['prefix' => 'barang'], function () {
+            Route::get('/', [BarangController::class, 'index']);
+            Route::post('/list', [BarangController::class, 'list']);
+            Route::get('/create_ajax', [BarangController::class, 'create_ajax']);
+            Route::post('/ajax', [BarangController::class, 'store_ajax']);
+            Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
+            Route::get('/import', [BarangController::class, 'import']); // untuk import data barang
+            Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // untuk import data barang ajax
+            Route::get('/export_excel', [BarangController::class, 'export_excel']); // untuk export data barang xlsx
+        });
+    });
+
     Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
         Route::group(['prefix' => 'laporan'], function () {
             Route::get('/exportpdf_kategori', [KategoriController::class, 'export_pdf']);
             Route::get('/exportpdf_user', [UserController::class, 'export_pdf']);
+            Route::get('/exportpdf_barang', [BarangController::class, 'export_pdf']);
         });
     });
 });
