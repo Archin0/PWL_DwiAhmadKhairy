@@ -13,12 +13,7 @@
               Tambah User
           </button>
       </div>
-    </div>  
-    {{-- <div class="card-header">
-        <div class="card-tools">
-          
-        </div>
-      </div> --}}
+    </div>
       <div class="card-body">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

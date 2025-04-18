@@ -58,9 +58,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link {{ ($activeMenu == 'barang') ? 'active' : '' }}">
+          <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 'barang') ? 'active' : '' }}">
             <i class="nav-icon fas fa-car"></i>
             <p>Data Barang</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>Data Supplier</p>
           </a>
         </li>
         <li class="nav-item">
@@ -86,15 +92,21 @@
         <!-- Laporan -->
         <li class="nav-header">LAPORAN</li>
         <li class="nav-item">
-          <a href="{{ url('/laporan/exportpdf_user') }}" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+          <a href="{{ url('/laporan/exportpdf_user') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Laporan User</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/laporan/exportpdf_kategori') }}" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+          <a href="{{ url('/laporan/exportpdf_kategori') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Laporan Kategori</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/laporan/exportpdf_barang') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Laporan Barang</p>
           </a>
         </li>
         <li class="nav-item">

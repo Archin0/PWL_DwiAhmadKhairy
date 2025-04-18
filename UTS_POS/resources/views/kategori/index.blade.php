@@ -58,7 +58,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <a id="detailBarangLink" href="#" class="btn btn-primary">Lihat Barang</a>
+                <a id="detailBarangLink" href="#" class="btn btn-primary" target="_blank">Lihat Barang</a>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
         $('#detailKode').text(kategori.kode_kategori);
         $('#detailNama').text(kategori.nama_kategori);
         $('#detailDeskripsi').text(kategori.deskripsi || '-');
-        $('#detailBarangLink').attr('href', "{{ url('barang') }}?kategori=" + kategori.id_kategori);
+        $('#detailBarangLink').attr('href', "{{ url('barang') }}?filter_kategori=" + kategori.id_kategori);
         
         // Show modal
         $('#detailModal').modal('show');
