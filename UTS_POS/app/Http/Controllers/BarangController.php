@@ -63,6 +63,16 @@ class BarangController extends Controller
                 $barang->where('id_kategori', $id_kategori);
             }
 
+            // Filter berdasarkan search (nama atau kode barang) jika ada
+            if ($request->filled('filter_search')) {
+                $searchTerm = '%' . $request->filter_search . '%';
+
+                $barang->where(function ($q) use ($searchTerm) {
+                    $q->where('nama_barang', 'LIKE', $searchTerm)
+                        ->orWhere('kode_barang', 'LIKE', $searchTerm);
+                });
+            }
+
             return DataTables::of($barang)
                 ->make(true);
         } else {

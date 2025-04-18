@@ -25,7 +25,12 @@
                                     @endforeach 
                                 </select> 
                                 <small class="form-text text-muted">Kategori Barang</small> 
-                            </div> 
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="filter_search" class="form-control form-control-sm filter_search" 
+                                       placeholder="Cari nama/kode barang">
+                                <small class="form-text text-muted">Nama atau Kode Barang</small>
+                            </div>
                         </div> 
                     </div> 
                 </div> 
@@ -248,12 +253,19 @@
 
     // Update bagian pembuatan card
     function loadBarangCards() {
+        const searchTerm = $('.filter_search').val().trim();
+        const kategori = $('.filter_kategori').val();
+        
         $.ajax({
             url: "{{ url('barang/list') }}",
             type: "POST",
             dataType: "json",
             data: {
-                filter_kategori: $('.filter_kategori').val()
+                filter_kategori: kategori,
+                filter_search: searchTerm
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
                 const container = $('#barang-container');
@@ -336,9 +348,19 @@
         
         loadBarangCards();
         
+        // Event untuk filter kategori
         $('.filter_kategori').change(function(){ 
             loadBarangCards();
-        }); 
+        });
+        
+        // Event untuk filter search dengan debounce 300ms
+        let searchTimeout;
+        $('.filter_search').on('input', function(){
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function(){
+                loadBarangCards();
+            }, 300);
+        });
     }); 
 </script> 
 @endpush

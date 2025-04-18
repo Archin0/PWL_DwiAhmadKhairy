@@ -110,6 +110,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{{ url('/laporan/exportpdf_supplier') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Laporan Supplier</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Laporan Transaksi</p>
