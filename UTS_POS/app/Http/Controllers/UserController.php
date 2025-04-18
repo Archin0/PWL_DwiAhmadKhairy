@@ -12,7 +12,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -353,6 +353,36 @@ class UserController extends Controller
             }
 
             return redirect('/');
+        }
+    }
+
+    public function export_pdf()
+    {
+        $id_user = Auth::id();
+        $cekAkses = Akses::where('id_user', $id_user)->first();
+
+        if ($cekAkses->laporan == 1) {
+            $user = User::select(
+                'users.username',
+                'users.nama',
+                'level.nama_level'
+            )
+                ->join('level', 'users.id_level', '=', 'level.id_level')
+                ->orderBy('users.id_user')
+                ->get();
+
+            // Tambahkan GMT+7 ke timestamp
+            $timestamp = now()->setTimezone('Asia/Jakarta')->format('Y-m-d H-i-s');
+
+            $pdf = PDF::loadView('laporan.exportpdf_user', ['user' => $user, 'timestamp' => $timestamp]);
+            $pdf->setPaper('a4', 'portrait');
+            $pdf->setOption("isRemoteEnabled", true);
+
+            return $pdf->stream('Data User ' . $timestamp . '.pdf', [
+                'Attachment' => false
+            ]);
+        } else {
+            return back();
         }
     }
 }

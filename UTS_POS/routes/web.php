@@ -53,4 +53,23 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::post('/update_akses', [AksesController::class, 'update_akses']);        // menampilkan data user dalam bentuk json untuk datatables
         });
     });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+        Route::group(['prefix' => 'kategori'], function () {
+            Route::get('/', [KategoriController::class, 'index']);
+            Route::post('/list', [KategoriController::class, 'list']);
+            Route::get('/create_ajax', [KategoriController::class, 'create_ajax']);
+            Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [KategoriController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+        Route::group(['prefix' => 'laporan'], function () {
+            Route::get('/exportpdf_kategori', [KategoriController::class, 'export_pdf']);
+            Route::get('/exportpdf_user', [UserController::class, 'export_pdf']);
+        });
+    });
 });

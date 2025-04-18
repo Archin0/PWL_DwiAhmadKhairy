@@ -2,14 +2,23 @@
 
 @section('content')
   <div class="card card-outline card-primary">
-      <div class="card-header">
-        <div class="card-tools">
-          <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-md btn-info mt-1">Import User (.xlsx)</button>
-          {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/export_excel') }}"><i class="fa fa-file-excel"></i>Export User</a>
-          <a href="{{ url('/user/export_pdf') }}" class="btn btn-sm mt-1 btn-warning"><i class="fa fa-file-pdf"></i> Export User (.pdf)</a> --}}
-          <button onclick="modalAction('{{ url('/user/create_ajax') }}')" class="btn btn-md btn-success mt-1">Tambah User</button>
-        </div>
+    <div class="card-header d-flex justify-content-center align-items-center">
+        <div class="card-tools d-flex justify-content-center flex-wrap">
+          <button onclick="modalAction('{{ url('/user/import') }}')" 
+                  class="btn btn-lg btn-info mr-5 mb-2">
+              Import User (.xlsx)
+          </button>
+          <button onclick="modalAction('{{ url('/user/create_ajax') }}')" 
+                  class="btn btn-lg btn-success mb-2">
+              Tambah User
+          </button>
       </div>
+    </div>  
+    {{-- <div class="card-header">
+        <div class="card-tools">
+          
+        </div>
+      </div> --}}
       <div class="card-body">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
