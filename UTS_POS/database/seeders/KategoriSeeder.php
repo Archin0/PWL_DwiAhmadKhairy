@@ -14,9 +14,9 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         DB::table('kategori')->insert([
-            ['kode_kategori' => 'LX', 'nama_kategori' => 'Luxury', 'deskripsi' => 'Mobil mewah dengan fitur premium, kenyamanan tingkat tinggi, dan desain elegan.'],
-            ['kode_kategori' => 'SP', 'nama_kategori' => 'Sports', 'deskripsi' => 'Mobil dengan performa tinggi, akselerasi cepat, dan desain aerodinamis.'],
-            ['kode_kategori' => 'OR', 'nama_kategori' => 'Off-Road', 'deskripsi' => 'Mobil tangguh yang dirancang untuk medan berat seperti gunung, hutan, dan gurun.'],
+            ['kode_kategori' => 'LX', 'nama_kategori' => 'Luxury', 'deskripsi' => 'Mobil mewah dengan fitur premium, kenyamanan tingkat tinggi, dan desain elegan.', 'foto_kategori' => 'luxury.png'],  
+            ['kode_kategori' => 'SP', 'nama_kategori' => 'Sports', 'deskripsi' => 'Mobil dengan performa tinggi, akselerasi cepat, dan desain aerodinamis.', 'foto_kategori' => 'sport.png'],
+            ['kode_kategori' => 'OR', 'nama_kategori' => 'Off-Road', 'deskripsi' => 'Mobil tangguh yang dirancang untuk medan berat seperti gunung, hutan, dan gurun.', 'foto_kategori' => 'offroad.png'],
         ]);
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_kategori')->unique();
             $table->string('nama_kategori');
             $table->text('deskripsi')->nullable();
+            $table->string('foto_kategori');
             $table->timestamps();
         });
     }

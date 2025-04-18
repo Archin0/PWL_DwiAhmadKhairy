@@ -167,40 +167,6 @@
                     $(this).prop('checked', !value);
                 }
             });
-            // $.ajax({
-            //     url: "{{ url('akses/update_akses') }}",
-            //     type: "POST",
-            //     data: {
-            //         id: id,
-            //         field: field,
-            //         value: value,
-            //         _token: "{{ csrf_token() }}"
-            //     },
-            //     success: function(response) {
-            //         if(response.success) {
-            //             Swal.fire({
-            //                 icon: 'success',
-            //                 title: 'Berhasil',
-            //                 text: response.message
-            //             });
-            //         } else {
-            //             Swal.fire({
-            //                 icon: 'error',
-            //                 title: 'Terjadi Kesalahan',
-            //                 text: response.message
-            //             });
-            //         }
-            //     },
-            //     error: function() {
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'Terjadi Kesalahan',
-            //             text: response.message
-            //         });
-            //         // Revert checkbox on error
-            //         $(this).prop('checked', !value);
-            //     }
-            // });
         });
 
         //reload otomatis dengan delay 300ms

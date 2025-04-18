@@ -52,7 +52,7 @@
         <!-- Kelola Barang -->
         <li class="nav-header">KELOLA BARANG</li>
         <li class="nav-item">
-          <a href="#" class="nav-link {{ ($activeMenu == 'kategori') ? 'active' : '' }}">
+          <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 'kategori') ? 'active' : '' }}">
             <i class="nav-icon fas fa-tags"></i>
             <p>Kategori Barang</p>
           </a>
@@ -85,6 +85,18 @@
       @if($akses->laporan == 1)
         <!-- Laporan -->
         <li class="nav-header">LAPORAN</li>
+        <li class="nav-item">
+          <a href="{{ url('/laporan/exportpdf_user') }}" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Laporan User</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/laporan/exportpdf_kategori') }}" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Laporan Kategori</p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="#" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
