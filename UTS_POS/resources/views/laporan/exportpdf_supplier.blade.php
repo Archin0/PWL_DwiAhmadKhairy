@@ -153,7 +153,7 @@ body {
     </div>
 
     <div class="report-title blue-accent">
-        LAPORAN DATA USER
+        LAPORAN DATA SUPPLIER
     </div>
 
     <div class="table-container">
@@ -161,18 +161,18 @@ body {
             <thead>
                 <tr>
                     <th class="text-center" width="5%">No</th>
-                    <th width="20%">Level User</th>
-                    <th width="20%">Username</th>
-                    <th width="55%">Nama</th>
+                    <th width="20%">Kode Supplier</th>
+                    <th width="20%">Nama Supplier</th>
+                    <th width="55%">Alamat</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($user as $u)
+                @foreach($supplier as $s)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
-                    <td><span class="badge">{{ $u->nama_level }}</span></td>
-                    <td><strong>{{ $u->username }}</strong></td>
-                    <td>{{ $u->nama }}</td>
+                    <td><span class="badge">{{ $s->kode_supplier }}</span></td>
+                    <td><strong>{{ $s->nama_supplier }}</strong></td>
+                    <td>{{ $s->alamat }}</td>
                 </tr>
                 @endforeach
             </tbody>

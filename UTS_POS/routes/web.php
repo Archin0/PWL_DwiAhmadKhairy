@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/exportpdf_kategori', [KategoriController::class, 'export_pdf']);
             Route::get('/exportpdf_user', [UserController::class, 'export_pdf']);
             Route::get('/exportpdf_barang', [BarangController::class, 'export_pdf']);
+            Route::get('/exportpdf_supplier', [SupplierController::class, 'export_pdf']);
         });
     });
 

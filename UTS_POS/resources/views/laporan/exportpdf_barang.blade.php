@@ -153,7 +153,7 @@ body {
     </div>
 
     <div class="report-title blue-accent">
-        LAPORAN BARANG
+        LAPORAN DATA BARANG
     </div>
 
     <div class="table-container">
