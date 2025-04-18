@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +33,7 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
     Route::get('/', [WelcomeController::class, 'index']);
     Route::get('/dashboard', [WelcomeController::class, 'index']);
 
-    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau STF
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', [UserController::class, 'index']);      // menampilkan halaman awal user
             Route::post('/list', [UserController::class, 'list']);        // menampilkan data user dalam bentuk json untuk datatables
@@ -47,15 +48,15 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
         });
     });
 
-    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
         Route::group(['prefix' => 'akses'], function () {
-            Route::get('/', [AksesController::class, 'index']);      // menampilkan halaman awal user
-            Route::post('/list', [AksesController::class, 'list']);        // menampilkan data user dalam bentuk json untuk datatables
-            Route::post('/update_akses', [AksesController::class, 'update_akses']);        // menampilkan data user dalam bentuk json untuk datatables
+            Route::get('/', [AksesController::class, 'index']);      // menampilkan halaman awal akses
+            Route::post('/list', [AksesController::class, 'list']);        // menampilkan data akses dalam bentuk card
+            Route::post('/update_akses', [AksesController::class, 'update_akses']);        // mengupdate hak akses user 
         });
     });
 
-    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
         Route::group(['prefix' => 'kategori'], function () {
             Route::get('/', [KategoriController::class, 'index']);
             Route::post('/list', [KategoriController::class, 'list']);
@@ -67,7 +68,7 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
         });
     });
 
-    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau MNG atau STF
+    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau STF
         Route::group(['prefix' => 'barang'], function () {
             Route::get('/', [BarangController::class, 'index']);
             Route::post('/list', [BarangController::class, 'list']);
@@ -83,11 +84,27 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
         });
     });
 
-    Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
         Route::group(['prefix' => 'laporan'], function () {
             Route::get('/exportpdf_kategori', [KategoriController::class, 'export_pdf']);
             Route::get('/exportpdf_user', [UserController::class, 'export_pdf']);
             Route::get('/exportpdf_barang', [BarangController::class, 'export_pdf']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
+        Route::group(['prefix' => 'supplier'], function () {
+            Route::get('/', [SupplierController::class, 'index']);      // menampilkan halaman awal supplier
+            Route::post('/list', [SupplierController::class, 'list']);        // menampilkan data supplier dalam bentuk json untuk datatables
+            Route::get('/create_ajax', [SupplierController::class, 'create_ajax']); // Menampilkan halaman form tambah supplier ajax
+            Route::post('/ajax', [SupplierController::class, 'store_ajax']); // menyimpan data supplier baru ajax
+            Route::get('/{id}/edit_ajax', [SupplierController::class, 'edit_ajax']); // menampilkan halaman form edit supplier Ajax
+            Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // menyimpan perubahan data supplier Ajax
+            Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete supplier Ajax
+            Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // Untuk hapus data supplier Ajax
+            Route::get('/import', [SupplierController::class, 'import']);
+            Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
+            Route::get('/export_excel', [SupplierController::class, 'export_excel']);
         });
     });
 });
