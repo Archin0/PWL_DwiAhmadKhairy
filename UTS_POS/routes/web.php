@@ -36,6 +36,10 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
     Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau STF
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', [UserController::class, 'index']);      // menampilkan halaman awal user
