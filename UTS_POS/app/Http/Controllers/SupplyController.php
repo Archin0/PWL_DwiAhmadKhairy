@@ -329,6 +329,15 @@ class SupplyController extends Controller
                         Supply::insertOrIgnore($insert);
                     }
 
+                    foreach ($data as $baris => $value) {
+                        if ($baris > 1) { // Lewati header
+                            // Update stok barang
+                            $barang = Barang::find($value['A']);
+                            $barang->stok += $value['B'];
+                            $barang->save();
+                        }
+                    }
+
                     return response()->json([
                         'status' => true,
                         'message' => 'Data berhasil diimport'

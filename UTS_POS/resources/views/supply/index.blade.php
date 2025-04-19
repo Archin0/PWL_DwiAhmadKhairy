@@ -4,8 +4,8 @@
 <div class="card card-outline card-primary">
     <div class="card-header d-flex justify-content-center align-items-center">
         <div class="card-tools d-flex justify-content-center flex-wrap">
-            <button onclick="modalAction('{{ url('/supply/import') }}')" class="btn btn-lg btn-info mr-5">Import Data Barang (.xlsx)</button> 
-                <a href="{{ url('/supply/export_excel') }}" class="btn btn-lg btn-primary mr-5"><i class="fa fa-file-excel"></i> Export Data Barang (.xlsx)</a> 
+            <button onclick="modalAction('{{ url('/supply/import') }}')" class="btn btn-lg btn-info mr-5">Import Data Supply (.xlsx)</button> 
+                <a href="{{ url('/supply/export_excel') }}" class="btn btn-lg btn-primary mr-5"><i class="fa fa-file-excel"></i> Export Data Supply (.xlsx)</a> 
             <button onclick="modalAction('{{ url('/supply/create_ajax') }}')" 
                     class="btn btn-primary btn-lg">
                 <i class="fa fa-plus"></i> Tambah Supply
