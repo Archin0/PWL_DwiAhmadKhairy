@@ -55,7 +55,7 @@ class UserController extends Controller
                 return DataTables::of($data)
                     ->addColumn('foto_profil', function ($row) {
                         return $row->foto_profil
-                            ? '<img src="' . asset('storage/' . $row->foto_profil) . '" width="50" style="border-radius:10px;">'
+                            ? '<img src="' . asset('storage/profile/' . $row->foto_profil) . '" width="50" style="border-radius:10px;">'
                             : '<img src="' . asset('default-avatar.jpg') . '" width="50" style="border-radius:10px;">';
                     })
                     ->addColumn('aksi', function ($row) {
