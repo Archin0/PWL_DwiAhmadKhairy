@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('id_transaksi');
             $table->unsignedBigInteger('id_user')->index();
-            $table->unsignedBigInteger('id_barang')->index();
             $table->string('kode_transaksi')->unique();
-            $table->integer('jumlah');
+            $table->string('pembeli');
             $table->integer('total_barang');
-            $table->bigInteger('subtotal');
             $table->integer('diskon')->default(0);
             $table->bigInteger('total_harga');
             $table->bigInteger('bayar');
@@ -26,7 +24,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
         });
     }
 

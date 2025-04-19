@@ -15,9 +15,8 @@ class Transaksi extends Model
     protected $fillable = [
         'id_user', 
         'kode_transaksi', 
-        'jumlah', 
+        'pembeli', 
         'total_barang', 
-        'subtotal', 
         'diskon', 
         'total_harga', 
         'bayar', 
@@ -26,11 +25,6 @@ class Transaksi extends Model
         'updated_at',
     ];
     public $timestamps = false;
-
-    public function barang(): BelongsTo
-    {
-        return $this->belongsTo(Barang::class, 'id_barang', 'id_barang');
-    }
 
     public function user(): BelongsTo
     {
