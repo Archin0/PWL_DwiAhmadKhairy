@@ -6,8 +6,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplyController;
 use Illuminate\Support\Facades\Route;
@@ -31,8 +33,8 @@ Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () { // middleware auth, artinya hanya bisa diakses oleh user yang sudah login
-    Route::get('/', [WelcomeController::class, 'index']);
-    Route::get('/dashboard', [WelcomeController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::middleware(['authorize:ADM,STF'])->group(function () { // artinya semua route di dalam group ini harus punya role ADM atau STF
         Route::group(['prefix' => 'user'], function () {
@@ -92,6 +94,7 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/exportpdf_barang', [BarangController::class, 'export_pdf']);
             Route::get('/exportpdf_supplier', [SupplierController::class, 'export_pdf']);
             Route::get('/exportpdf_supply', [SupplyController::class, 'export_pdf']);
+            Route::get('/exportpdf_transaksi', [TransaksiController::class, 'export_transaksi']);
         });
     });
 
@@ -124,6 +127,29 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/import', [SupplyController::class, 'import']);
             Route::post('/import_ajax', [SupplyController::class, 'import_ajax']);
             Route::get('/export_excel', [SupplyController::class, 'export_excel']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
+        Route::group(['prefix' => 'transaksi'], function () {
+            Route::get('/', [TransaksiController::class, 'index']);
+            Route::get('/list', [TransaksiController::class, 'indexList'])->name('transaksi.list.view');
+            Route::post('/list', [TransaksiController::class, 'list'])->name('transaksi.list');
+            // Route::delete('/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+
+            // Route::post('/list', [TransaksiController::class, 'list']);
+            // Route::get('/create_ajax', [TransaksiController::class, 'create_ajax']);
+            // Route::post('/ajax', [TransaksiController::class, 'store_ajax']);
+            // Route::get('/{id}/edit_ajax', [TransaksiController::class, 'edit_ajax']);
+            // Route::put('/{id}/update_ajax', [TransaksiController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [TransaksiController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [TransaksiController::class, 'delete_ajax']);
+            // Route::get('/import', [TransaksiController::class, 'import']);
+            // Route::post('/import_ajax', [TransaksiController::class, 'import_ajax']);
+            // Route::get('/export_excel', [TransaksiController::class, 'export_excel']);
+
+            Route::post('/', [TransaksiController::class, 'store'])->name('transaksi.store');
+            Route::get('/export_pdf/{id}', [TransaksiController::class, 'export_pdf'])->name('transaksi.export_pdf');
         });
     });
 });

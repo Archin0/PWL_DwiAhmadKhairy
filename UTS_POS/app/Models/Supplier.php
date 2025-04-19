@@ -22,6 +22,6 @@ class Supplier extends Model
 
     public function supplies(): HasMany
     {
-        return $this->hasMany(Barang::class, 'id_supplier', 'id_supplier');
+        return $this->hasMany(Supply::class, 'id_supplier', 'id_supplier');
     }
 }

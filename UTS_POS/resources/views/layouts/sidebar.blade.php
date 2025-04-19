@@ -81,9 +81,15 @@
         <!-- Kelola Transaksi -->
         <li class="nav-header">KELOLA TRANSAKSI</li>
         <li class="nav-item">
-          <a href="#" class="nav-link {{ ($activeMenu == 'transaksi') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-receipt"></i>
+          <a href="{{ url('/transaksi') }}" class="nav-link {{ ($activeMenu == 'transaksi') ? 'active' : '' }}">
+            <i class="nav-icon fa fa-cart-plus"></i>
             <p>Transaksi</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/transaksi/list') }}" class="nav-link {{ ($activeMenu == 'transaksi_list') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-receipt"></i>
+            <p>Data Transaksi</p>
           </a>
         </li>
       @endif
@@ -122,7 +128,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+          <a href="{{ url('/laporan/exportpdf_transaksi') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Laporan Transaksi</p>
           </a>

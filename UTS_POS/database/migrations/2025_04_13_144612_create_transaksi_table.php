@@ -19,8 +19,7 @@ return new class extends Migration
             $table->integer('total_barang');
             $table->integer('diskon')->default(0);
             $table->bigInteger('total_harga');
-            $table->bigInteger('bayar');
-            $table->bigInteger('kembali');
+            $table->enum('metode_pembayaran', ['Card Only', 'Transfer']);
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('users');
