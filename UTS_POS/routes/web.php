@@ -9,6 +9,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,7 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/exportpdf_user', [UserController::class, 'export_pdf']);
             Route::get('/exportpdf_barang', [BarangController::class, 'export_pdf']);
             Route::get('/exportpdf_supplier', [SupplierController::class, 'export_pdf']);
+            Route::get('/exportpdf_supply', [SupplyController::class, 'export_pdf']);
         });
     });
 
@@ -106,6 +108,22 @@ Route::middleware(['auth'])->group(function () { // middleware auth, artinya han
             Route::get('/import', [SupplierController::class, 'import']);
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
             Route::get('/export_excel', [SupplierController::class, 'export_excel']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,STF'])->group(function () {
+        Route::group(['prefix' => 'supply'], function () {
+            Route::get('/', [SupplyController::class, 'index']);
+            Route::post('/list', [SupplyController::class, 'list']);
+            Route::get('/create_ajax', [SupplyController::class, 'create_ajax']);
+            Route::post('/ajax', [SupplyController::class, 'store_ajax']);
+            Route::get('/{id}/edit_ajax', [SupplyController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [SupplyController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [SupplyController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [SupplyController::class, 'delete_ajax']);
+            Route::get('/import', [SupplyController::class, 'import']);
+            Route::post('/import_ajax', [SupplyController::class, 'import_ajax']);
+            Route::get('/export_excel', [SupplyController::class, 'export_excel']);
         });
     });
 });

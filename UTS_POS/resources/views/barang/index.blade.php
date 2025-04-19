@@ -306,6 +306,11 @@
                                     </div>
                                     <div class="barang-card-footer">
                                         <div class="barang-card-actions">
+                                            <!-- Button Tambah Stok -->
+                                            <button onclick="event.stopPropagation(); modalAction('{{ url('/supply/create_ajax') }}?id_barang=' + ${barang.id_barang})" 
+                                                    class="btn btn-sm btn-primary" title="Tambah Stok">
+                                                <i class="fa fa-plus"></i> Stok
+                                            </button>   
                                             <button onclick="event.stopPropagation(); modalAction('{{ url('/barang') }}/${barang.id_barang}/edit_ajax')" 
                                                     class="btn btn-sm btn-warning" title="Edit">
                                                 <i class="fa fa-edit"></i>

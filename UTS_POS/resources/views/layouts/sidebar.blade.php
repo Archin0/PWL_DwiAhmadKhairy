@@ -70,9 +70,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link {{ ($activeMenu == 'supply') ? 'active' : '' }}">
+          <a href="{{ url('/supply') }}" class="nav-link {{ ($activeMenu == 'supply') ? 'active' : '' }}">
             <i class="nav-icon fas fa-truck-loading"></i>
-            <p>Supply Barang</p>
+            <p>Data Supply Barang</p>
           </a>
         </li>
       @endif
@@ -113,6 +113,12 @@
           <a href="{{ url('/laporan/exportpdf_supplier') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Laporan Supplier</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/laporan/exportpdf_supply') }}" target="_blank" class="nav-link {{ ($activeMenu == 'laporan') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Laporan Supply Barang</p>
           </a>
         </li>
         <li class="nav-item">
