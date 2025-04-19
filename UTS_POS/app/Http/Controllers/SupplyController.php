@@ -334,6 +334,7 @@ class SupplyController extends Controller
                             // Update stok barang
                             $barang = Barang::find($value['A']);
                             $barang->stok += $value['B'];
+                            $barang->updated_at = now();
                             $barang->save();
                         }
                     }
