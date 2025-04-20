@@ -53,7 +53,7 @@ class AksesController extends Controller
                 return DataTables::of($data)
                     ->addColumn('foto_profil', function ($row) {
                         return $row->user->foto_profil
-                            ? '<img src="' . asset('storage/' . $row->user->foto_profil) . '" width="50" style="border-radius:10px;">'
+                            ? '<img src="' . asset('storage/profile/' . $row->user->foto_profil) . '" width="50" style="border-radius:10px;">'
                             : '<img src="' . asset('default-avatar.jpg') . '" width="50" style="border-radius:10px;">';
                     })
                     ->addColumn('kelola_akun', function ($row) {
